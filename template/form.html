@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}New Receipt{% endblock %}
+
+{% block content %}
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background-color: #f2f2f2; }
+    h2 { color: #333; text-align: center; }
+    form { background: #fff; padding: 20px; max-width: 500px; margin: auto; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+    input[type=text], input[type=number], input[type=email] { width: 100%; padding: 8px; margin: 5px 0 10px 0; border: 1px solid #ccc; border-radius: 4px; }
+    button { background-color: #4CAF50; color: white; padding: 10px; border: none; border-radius: 4px; cursor: pointer; }
+    button:hover { background-color: #45a049; }
+    .item-row { display: flex; gap: 10px; margin-bottom: 10px; }
+    .item-row input { flex: 1; }
+    .links { text-align: center; margin-top: 20px; }
+    .links a { margin: 0 10px; text-decoration: none; color: #4CAF50; }
+  </style>
+
+  <a href="/logout">Logout</a>
+  <h2>Receipt Generator</h2>
+
+  <form action="/generate" method="post">
+    <label>Business Name:</label>
+    <input type="text" name="business_name" required>
+
+    <label>Client Name:</label>
+    <input type="text" name="client_name" required>
+
+    <label>Client Email:</label>
+    <input type="email" name="client_email" required>
+
+    <div id="items">
+      <div class="item-row">
+        <input type="text" name="item_name" placeholder="Item/Service" required>
+        <input type="number" name="item_price" placeholder="Price" required>
+      </div>
+    </div>
+
+    <button type="button" onclick="addItem()">+ Add Item</button>
+    <br><br>
+    <button type="submit">Generate Receipt</button>
+  </form>
+
+  <div class="links">
+    <a href="/history">View Receipt History</a>
+    <a href="/logout">Logout</a>
+  </div>
+
+  <script>
+    function addItem() {
+      const itemsDiv = document.getElementById('items');
+      const newRow = document.createElement('div');
+      newRow.className = 'item-row';
+      newRow.innerHTML = `
+        <input type="text" name="item_name" placeholder="Item/Service" required>
+        <input type="number" name="item_price" placeholder="Price" required>
+      `;
+      itemsDiv.appendChild(newRow);
+    }
+  </script>
+{% endblock %}

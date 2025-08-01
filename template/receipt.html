@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% block title %}Generated Receipt{% endblock %}
+
+{% block content %
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #fff;
+      padding: 30px;
+      color: #333;
+    }
+    .receipt {
+      max-width: 600px;
+      margin: auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+    }
+    h2 {
+      text-align: center;
+      color: #4CAF50;
+    }
+    img.logo {
+      display: block;
+      margin: 0 auto 20px;
+      max-width: 150px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 8px;
+      text-align: left;
+    }
+    th {
+      background-color: #4CAF50;
+      color: white;
+    }
+    tr:last-child {
+      background-color: #e0ffe0;
+      font-weight: bold;
+    }
+    .footer {
+      text-align: center;
+      margin-top: 30px;
+      font-size: 12px;
+      color: #777;
+    }
+  </style>
+
+  <div class="receipt">
+    <img src="{{ url_for('static', filename='logo.jpg') }}" alt="Logo" class="logo">
+    <a href="/logout">Logout</a>
+    <h2>Receipt</h2>
+    <p><strong>Business:</strong> {{ business_name }}</p>
+    <p><strong>Client:</strong> {{ client_name }}</p>
+    <p><strong>Date:</strong> {{ date }}</p>
+    <p><strong>Email:</strong> {{ client_email }}</p>
+
+    <table>
+      <tr>
+        <th>Item/Service</th>
+        <th>Price (₦)</th>
+      </tr>
+      {% for name, price in items %}
+      <tr>
+        <td>{{ name }}</td>
+        <td>{{ price }}</td>
+      </tr>
+      {% endfor %}
+      <tr>
+        <th>Total</th>
+        <th>₦{{ total }}</th>
+      </tr>
+    </table>
+
+    <form action="/download-pdf" method="post">
+      <input type="hidden" name="business_name" value="{{ business_name }}">
+      <input type="hidden" name="client_name" value="{{ client_name }}">
+      <input type="hidden" name="client_email" value="{{ client_email }}">
+
+      {% for name in item_names %}
+        <input type="hidden" name="item_name" value="{{ name }}">
+      {% endfor %}
+      {% for price in item_prices %}
+        <input type="hidden" name="item_price" value="{{ price }}">
+      
+      {% endfor %}
+      <button type="submit">Download PDF</button>
+    </form>
+
+    <div class="footer">
+      Thank you for choosing {{ business_name }}!
+    </div>
+  </div>
+{% endblock %}

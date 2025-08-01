@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Send Receipt Email{% endblock %}
+
+{% block content %}
+  <h2>Send Receipt to {{ client_name }}</h2>
+  <form method="post">
+    <label>Recipient Email:</label>
+    <input type="email" name="client_email" required>
+    <button type="submit">Send Email</button>
+  </form>
+{% endblock %}

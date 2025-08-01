@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block title %}Receipt History{% endblock %}
+
+{% block content %
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+      padding: 20px;
+    }
+    h2 {
+      text-align: center;
+      color: #4CAF50;
+    }
+    table {
+      width: 90%;
+      margin: 20px auto;
+      border-collapse: collapse;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 8px;
+      text-align: center;
+    }
+    th {
+      background-color: #4CAF50;
+      color: white;
+    }
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+    a.button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 6px 12px;
+      text-decoration: none;
+      border-radius: 4px;
+    }
+    a.button:hover {
+      background-color: #45a049;
+    }
+  </style>
+
+  <h2>Your Receipt History</h2>
+  <table>
+    <tr>
+      <th>ID</th>
+      <th>Client</th>
+      <th>Date</th>
+      <th>Total (₦)</th>
+      <th>Actions</th>
+    </tr>
+    {% for receipt in receipts %}
+    <tr>
+      <td>{{ receipt[0] }}</td>
+      <td>{{ receipt[1] }}</td>
+      <td>{{ receipt[2] }}</td>
+      <td>₦{{ receipt[3] }}</td>
+      <td>
+        <a class="button" href="{{ url_for('view_receipt', receipt_id=receipt[0]) }}">View</a>
+        <a class="button" href="{{ url_for('send_email_existing', receipt_id=receipt[0]) }}">Email</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+{% endblock %}

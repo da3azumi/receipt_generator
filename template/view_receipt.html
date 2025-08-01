@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}View Receipt{% endblock %}
+
+{% block content %}
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background-color: #f9f9f9; }
+    .receipt { max-width: 600px; margin: auto; background: #fff; padding: 20px; border: 1px solid #ccc; }
+    h2 { text-align: center; color: #4CAF50; }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+    th { background-color: #4CAF50; color: white; }
+    tr:last-child { background-color: #e0ffe0; font-weight: bold; }
+    .footer { text-align: center; margin-top: 30px; font-size: 12px; color: #777; }
+    a.button { display: inline-block; margin-top: 20px; padding: 10px; background-color: #4CAF50; color: white; text-decoration: none; border-radius: 4px; }
+  </style>
+  <div class="receipt">
+    <h2>Receipt</h2>
+    <p><strong>Business:</strong> {{ business_name }}</p>
+    <p><strong>Client:</strong> {{ client_name }}</p>
+    <p><strong>Date:</strong> {{ date }}</p>
+
+    <table>
+      <tr>
+        <th>Item/Service</th>
+        <th>Price (₦)</th>
+      </tr>
+      {% for name, price in items %}
+      <tr>
+        <td>{{ name }}</td>
+        <td>{{ price }}</td>
+      </tr>
+      {% endfor %}
+      <tr>
+        <th>Total</th>
+        <th>₦{{ total }}</th>
+      </tr>
+    </table>
+
+    <div class="footer">
+      Thank you for choosing {{ business_name }}!
+    </div>
+    <form action="{{ url_for('receipt_pdf', receipt_id=receipt_id) }}" method="get">
+      <button type="submit">Download PDF</button>
+    </form>
+    <p>
+      <a href="{{ url_for('send_email_existing', receipt_id=receipt_id) }}" class="button">Send by Email</a>
+    </p>
+
+    <div style="text-align:center;">
+      <a href="/history" class="button">Back to History</a>
+    </div>
+  </div>
+{% endblock %}
