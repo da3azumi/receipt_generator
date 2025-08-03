@@ -43,6 +43,9 @@ def login():
             flash("Invalid username or password.", "danger")
             return redirect(url_for('login'))
 
+    # ✅ This part runs for GET requests
+    return render_template('login.html')
+
 @app.route('/logout')
 def logout():
     session.clear()
@@ -64,8 +67,8 @@ def generate():
         return redirect(url_for('login'))
 
     username = session['username']
-    business_name = request.form['business_name']
-    client_name = request.form['client_name']
+    business_name = request.form.get('business_name', '')
+    client_name = request.form.get('client_name', '')
     client_email = request.form['client_email']
     item_names = request.form.getlist('item_name')
     item_prices = request.form.getlist('item_price')
@@ -162,11 +165,13 @@ def send_email_existing(receipt_id):
                       recipients=[client_email])
         msg.body = f"Hello {client_name},\n\nPlease find your receipt attached.\n\nThank you,\nYour Business"
         msg.attach("receipt.pdf", "application/pdf", pdf_data)
-        mail.send(msg)
+        try:
+            mail.send(msg)
+            flash("Email sent successfully!", "success")
+        except Exception as e:
+            flash(f"Failed to send email: {str(e)}", "danger")
 
-        return "Email sent successfully!"
-
-    return render_template('send_email.html', receipt_id=receipt_id, client_name=client_name)
+        return redirect(url_for('view_receipt', receipt_id=receipt_id))
 
 @app.route('/receipt/<int:receipt_id>')
 def view_receipt(receipt_id):
@@ -180,7 +185,7 @@ def view_receipt(receipt_id):
     conn.close()
 
     if result is None:
-        return "Receipt not found or unauthorized", 404
+        return render_template('404.html'), 404
 
     client_name, items_json, date, total = result
     items = json.loads(items_json)
@@ -249,7 +254,8 @@ def register():
             c.execute('INSERT INTO users (username, password) VALUES (?, ?)', (username, hashed_password))
             conn.commit()
         except sqlite3.IntegrityError:
-            return "Username already exists. Please choose another."
+            flash("username already exists. please choose another.", "danger")
+            return redirect(url_for('register')),
         finally:
             conn.close()
 
