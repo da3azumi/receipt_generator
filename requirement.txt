@@ -1,4 +1,0 @@
-Flask
-Flask-Mail
-WeasyPrint
-Werkzeug
