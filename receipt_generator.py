@@ -15,6 +15,32 @@ conn = sqlite3.connect(DB_PATH)
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
 
+def init_db():
+    conn = sqlite3.connect(DB_PATH)
+    c = conn.cursor()
+    c.execute('''
+        CREATE TABLE IF NOT EXISTS users (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            username TEXT UNIQUE NOT NULL,
+            password TEXT NOT NULL
+        )
+    ''')
+    c.execute('''
+        CREATE TABLE IF NOT EXISTS receipts (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id INTEGER NOT NULL,
+            client_name TEXT NOT NULL,
+            items TEXT NOT NULL,
+            date TEXT NOT NULL,
+            total REAL NOT NULL,
+            FOREIGN KEY(user_id) REFERENCES users(id)
+        )
+    ''')
+    conn.commit()
+    conn.close()
+
+init_db()
+
 # Email config
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 587

@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block title %}Login{% endblock %}
 
-{% block content %
+{% block content %}
   <style>
     body { font-family: Arial, sans-serif; padding: 20px; background-color: #f2f2f2; }
     form { background: #fff; padding: 20px; max-width: 400px; margin: auto; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
@@ -17,4 +17,9 @@
     <input type="password" name="password" placeholder="Password" required>
     <button type="submit">Login</button>
   </form>
+
+  <p>Don't have an account? 
+    <a href="{{ url_for('register') }}">Register here</a>
+</p>
+
 {% endblock %}
