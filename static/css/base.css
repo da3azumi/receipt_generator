@@ -1,0 +1,65 @@
+/* App Header */
+.app-header {
+  background: linear-gradient(90deg, var(--primary), var(--primary-2));
+  padding: 14px 0;
+  box-shadow: var(--shadow);
+}
+
+.app-header nav a {
+  color: #fff;
+  font-weight: 600;
+  margin: 0 12px;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+.app-header nav a:hover {
+  opacity: 0.85;
+  text-decoration: underline;
+}
+
+/* Main content container */
+main {
+  background: var(--surface);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  padding: 20px;
+}
+/* Flash Alerts (override Bootstrap defaults) */
+.alert {
+  border-radius: 10px;
+  font-weight: 500;
+  box-shadow: var(--shadow);
+  padding: 12px 16px;
+}
+
+/* Success → teal/blue */
+.alert-success {
+  background: linear-gradient(90deg, #38b2ac, #3182ce);
+  color: #fff;
+  border: none;
+}
+
+/* Error → pink/red */
+.alert-danger {
+  background: linear-gradient(90deg, #e53e3e, #d53f8c);
+  color: #fff;
+  border: none;
+}
+
+/* Warning → amber/orange */
+.alert-warning {
+  background: linear-gradient(90deg, #f6ad55, #dd6b20);
+  color: #fff;
+  border: none;
+}
+
+/* Info → blue/purple */
+.alert-info {
+  background: linear-gradient(90deg, var(--primary), var(--primary-2));
+  color: #fff;
+  border: none;
+}
+.alert .btn-close {
+  filter: invert(1); /* makes the 'X' white */
+}

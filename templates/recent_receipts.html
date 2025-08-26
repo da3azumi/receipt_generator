@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Recent Receipts</title>
+<style>
+  body { font-family: Inter, system-ui; background: #0f1724; color: white; margin: 0; padding: 20px; }
+  h1 { font-size: 22px; margin-bottom: 10px; }
+  table { width: 100%; border-collapse: collapse; background: rgba(255,255,255,0.04); border-radius: 10px; overflow: hidden; }
+  th, td { padding: 12px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.08); }
+  th { background: rgba(255,255,255,0.08); font-weight: 600; }
+  tr:hover td { background: rgba(255,255,255,0.06); }
+  a { color: #06b6d4; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+  <h1>Recent Receipts</h1>
+  {% if receipts %}
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Customer</th>
+        <th>Total</th>
+        <th>Date</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for r in receipts %}
+      <tr>
+        <td>{{ r.id }}</td>
+        <td>{{ r.client_name }}</td>
+        <td>₦{{ '%.2f' % r.total }}</td>
+        <td>{{ r.date }}</td>
+        <td>
+          <a href="{{ url_for('view_receipt', receipt_id=r.id) }}">View</a> |
+          <a href="{{ url_for('download_receipt', receipt_id=r.id) }}">Download</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <p>No recent receipts found.</p>
+  {% endif %}
+</body>
+</html>

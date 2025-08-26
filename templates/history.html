@@ -42,25 +42,23 @@
   </style>
 
   <h2>Your Receipt History</h2>
-  <table>
-    <tr>
-      <th>ID</th>
-      <th>Client</th>
-      <th>Date</th>
-      <th>Total (₦)</th>
-      <th>Actions</th>
-    </tr>
-    {% for receipt in receipts %}
-    <tr>
-      <td>{{ receipt[0] }}</td>
-      <td>{{ receipt[1] }}</td>
-      <td>{{ receipt[2] }}</td>
-      <td>₦{{ receipt[3] }}</td>
-      <td>
-        <a class="button" href="{{ url_for('view_receipt', receipt_id=receipt[0]) }}">View</a>
-        <a class="button" href="{{ url_for('send_email_existing', receipt_id=receipt[0]) }}">Email</a>
-      </td>
-    </tr>
-    {% endfor %}
-  </table>
+  <form method="get" action="{{ url_for('history') }}">
+    <input type="text" name="search" placeholder="Search by Client Name" value="{{ search_query or '' }}">
+    <button type="submit">Search</button>
+  </form>
+
+<table> ... 
+{% for receipt in receipts %}
+<tr>
+  <td>{{ receipt.id }}</td>
+  <td>{{ receipt.client_name }}</td>
+  <td>{{ receipt.date }}</td>
+  <td>₦{{ '%.2f'|format(receipt.total) }}</td>
+  <td>
+    <a class="button" href="{{ url_for('view_receipt', receipt_id=receipt.id) }}">View</a>
+    <a class="button" href="{{ url_for('send_email_existing', receipt_id=receipt.id) }}">Email</a>
+  </td>
+</tr>
+{% endfor %}
+</table>
 {% endblock %}

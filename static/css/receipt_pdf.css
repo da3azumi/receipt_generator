@@ -1,0 +1,59 @@
+/* Global receipt styling */
+body {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+  color: #333;
+  font-size: 14px;
+  background-image: url("data:image/svg+xml;utf8,\
+  <svg xmlns='http://www.w3.org/2000/svg' width='300' height='200'>\
+    <text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle'\
+      transform='rotate(-30 150 100)' font-size='24' fill='rgba(0,0,0,0.06)'>Flexmate</text>\
+  </svg>");
+  background-repeat: repeat;
+  background-size: 300px 200px;
+}
+
+/* Header / App name */
+.receipt-header {
+  text-align: center;
+  margin-bottom: 20px;
+  padding: 15px;
+  background: linear-gradient(90deg, #3b82f6, #9333ea);
+  color: white;
+  border-radius: 10px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+/* Table styling */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+th {
+  background: linear-gradient(90deg, #3b82f6, #9333ea);
+  color: white;
+  padding: 10px;
+  text-align: left;
+}
+
+td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+/* Total section */
+.total {
+  text-align: right;
+  margin-top: 15px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #3b82f6;
+}

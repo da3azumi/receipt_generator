@@ -49,10 +49,8 @@
       color: #777;
     }
   </style>
-
   <div class="receipt">
-    <img src="{{ url_for('static', filename='logo.jpg') }}" alt="Logo" class="logo">
-    <a href="/logout">Logout</a>
+    <img src="{{ url_for('static', filename='logo1.png') }}" alt="Logo" class="logo">
     <h2>Receipt</h2>
     <p><strong>Business:</strong> {{ business_name }}</p>
     <p><strong>Client:</strong> {{ client_name }}</p>
@@ -75,21 +73,30 @@
         <th>₦{{ total }}</th>
       </tr>
     </table>
-
     <form action="/download-pdf" method="post">
       <input type="hidden" name="business_name" value="{{ business_name }}">
       <input type="hidden" name="client_name" value="{{ client_name }}">
-      <input type="hidden" name="client_email" value="{{ client_email }}">
-
       {% for name in item_names %}
         <input type="hidden" name="item_name" value="{{ name }}">
       {% endfor %}
       {% for price in item_prices %}
         <input type="hidden" name="item_price" value="{{ price }}">
-      
       {% endfor %}
       <button type="submit">Download PDF</button>
     </form>
+
+        <form action="/send-email" method="post">
+            <input type="hidden" name="business_name" value="{{ business_name }}">
+            <input type="hidden" name="client_name" value="{{ client_name }}">
+            <input type="hidden" name="client_email" value="{{ client_email }}">
+            {% for name in item_names %}
+                <input type="hidden" name="item_name" value="{{ name }}">
+            {% endfor %}
+            {% for price in item_prices %}
+                <input type="hidden" name="item_price" value="{{ price }}">
+            {% endfor %}
+            <button type="submit">Email Receipt</button>
+        </form>
 
     <div class="footer">
       Thank you for choosing {{ business_name }}!
